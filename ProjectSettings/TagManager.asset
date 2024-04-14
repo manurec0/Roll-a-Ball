@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - PickUp
+  - CollisionSound
+  - GroundCol
   layers:
   - Default
   - TransparentFX

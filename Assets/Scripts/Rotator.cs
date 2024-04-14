@@ -30,8 +30,3 @@ public class Rotator : MonoBehaviour
         transform.Translate(0, sineWave, 0, Space.World);
     }
 }
-
-//    angle += (float)elapsed_time * 20;
-//azimuth += (float)elapsed_time * 0.8f;
-//    model.setTranslation(model.getTranslation().x, 10*sin(azimuth), model.getTranslation().z);
-//model.rotate(angle * DEG2RAD, Vector3(0, 1, 0));
