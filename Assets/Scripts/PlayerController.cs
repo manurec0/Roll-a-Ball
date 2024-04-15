@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        isGrounded = IsGrounded();
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         rb.AddForce(movement * speed);
         footsteps.volume = Mathf.Clamp01(rb.velocity.magnitude / volumeSpeed);
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
         if (rb.angularVelocity.magnitude >= 1)
         {
             isMoving = true;
-            if (!footsteps.isPlaying)
+            if (!footsteps.isPlaying && isGrounded)
             {
                 footsteps.Play();
             }
@@ -62,13 +63,10 @@ public class PlayerController : MonoBehaviour
         }
         else {
             isMoving = false;
-            if (footsteps.isPlaying)
-            {
-                footsteps.Stop();
-            }
+            footsteps.Stop();
         }
 
-        isGrounded = IsGrounded();
+
 
         //if (isMoving == true)
         //{
@@ -83,7 +81,6 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementY = movementVector.y;
-        footsteps.Play();
     }
 
     void SetCountText()
