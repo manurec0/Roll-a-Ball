@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+
+    private float distToGround;
     public bool isMoving;
+    public bool isGrounded;
 
     public AudioSource footsteps;
     public AudioSource pickUp;
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         count = 0;
         rb = GetComponent<Rigidbody>();
+        distToGround = 0.5f;
         isMoving = false;
         SetCountText ();
         footsteps = GetComponent<AudioSource>();
@@ -49,7 +53,7 @@ public class PlayerController : MonoBehaviour
         if (rb.angularVelocity.magnitude >= 1)
         {
             isMoving = true;
-            if (!footsteps.isPlaying && rb.velocity.y > 0)
+            if (!footsteps.isPlaying)
             {
                 footsteps.Play();
             }
@@ -63,6 +67,8 @@ public class PlayerController : MonoBehaviour
                 footsteps.Stop();
             }
         }
+
+        isGrounded = IsGrounded();
 
         //if (isMoving == true)
         //{
@@ -114,6 +120,15 @@ public class PlayerController : MonoBehaviour
         {
             groundCol.Play();
         }
+    }
+
+    //bool IsGrounded()
+    //{
+    //    return GetComponent<Rigidbody>().velocity.y == 0;
+    //}
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
 
 }
