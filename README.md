@@ -6,6 +6,8 @@ WASD or Arrows to move.
 Reach the end of the track to win, then close the game (no respawn feature yet)
 And collect cubes!.
 
+App in .../Builds/Roll-a-Ball_Custom
+
 Changes made to the Roll-a-Ball tutorial:
 
 - Added a sinusoidal movement to the collectibles for a "floaty" effect, and random rotation to each collectible so they are not all the same.
