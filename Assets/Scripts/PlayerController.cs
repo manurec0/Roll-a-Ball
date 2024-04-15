@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         if (rb.angularVelocity.magnitude >= 1)
         {
             isMoving = true;
-            if (!footsteps.isPlaying)
+            if (!footsteps.isPlaying && rb.velocity.y > 0)
             {
                 footsteps.Play();
             }
