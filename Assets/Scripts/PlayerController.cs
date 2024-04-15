@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.InputSystem.Utilities;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+    public TextMeshProUGUI winScoreText;
 
     private float distToGround;
     public bool isMoving;
@@ -18,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public AudioSource pickUp;
     public AudioSource colSound;
     public AudioSource groundCol;
+    public AudioSource boost;
+    public AudioSource deboost;
 
     private Rigidbody rb;
     private int count;
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = 10;
         count = 0;
         rb = GetComponent<Rigidbody>();
         distToGround = 0.5f;
@@ -87,11 +92,11 @@ public class PlayerController : MonoBehaviour
     {
         countText.text = "Count: " + count.ToString();
 
-        if (count >= 12)
-        {
-            // Set the text value of your 'winText'
-            winTextObject.SetActive(true);
-        }
+        //if (count >= 12)
+        //{
+        //    // Set the text value of your 'winText'
+        //    winTextObject.SetActive(true);
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -104,6 +109,24 @@ public class PlayerController : MonoBehaviour
 
             // Run the 'SetCountText()' function (see below)
             SetCountText();
+        }
+        if (other.gameObject.CompareTag("Turbo"))
+        {
+            Vector3 movement = new Vector3(0.0f, 0.0f, movementY);
+            rb.AddForce(movement * 500);
+
+            boost.Play();
+        }
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            winTextObject.SetActive(true);
+            winScoreText.text = "Final Score: " + count.ToString();
+        }
+        if (other.gameObject.CompareTag("DeBoost"))
+        {
+            Vector3 movement = new Vector3(0, 0.0f, -Mathf.Abs(movementY));
+            rb.AddForce(movement * 3000);
+            deboost.Play();
         }
     }
 
